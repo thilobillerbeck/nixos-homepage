@@ -47,7 +47,8 @@ jobs:
           nix develop --accept-flake-config --command npm run build
           mkdir build
           cp -RL ./dist/* ./build/
-
+      - name: Check if production is true
+        run: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
       - name: "Publish to Netlify"
         if: ${{ github.repository == 'NixOS/nixos-homepage' }}
         uses: "nwtgck/actions-netlify@v3.0.0"
